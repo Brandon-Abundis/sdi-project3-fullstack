@@ -1,9 +1,26 @@
 import { useNavigate } from "react-router-dom"
 
 import GeoChart from "../GeoCharts/GeoChart";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function Home() {
   const navigate = useNavigate();
+
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      const countriesData = await fetch('http://localhost:8080/countries/name/japan')
+        .then(res => res.json());
+
+      setData(countriesData);
+    }
+    fetchData();
+  },[]);
+
+  if(!data) return <p>Loading data...</p>
+  console.log(data);
 
   return(
     <div className="home">
@@ -16,6 +33,11 @@ export default function Home() {
         <button>Stats</button>
         <button>World</button>
       </div>
+
+      <div>
+        {data ? (<p>{data.region}</p>):(<p>Loading fetch data...</p>)}
+      </div>
+
 
       <div id="social">
           <svg className="icon" role="presentation" aria-hidden="true">
