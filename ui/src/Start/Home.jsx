@@ -11,7 +11,7 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      const countriesData = await fetch('http://localhost:8080/countries/name/japan')
+      const countriesData = await fetch('http://localhost:8080/countries/all')
         .then(res => res.json());
 
       setData(countriesData);
@@ -20,12 +20,12 @@ export default function Home() {
   },[]);
 
   if(!data) return <p>Loading data...</p>
-  console.log(data);
+  // console.log(data[75]);
 
   return(
     <div className="home">
       <div className="geo-chart-menu">
-        <GeoChart width={'900px'} height={'100%'} />
+        <GeoChart width={'900px'} height={'100%'} testData={data}/>
       </div>
       <div className="home-menu">
         <h2>Global Conquest ahh game</h2>
@@ -34,9 +34,9 @@ export default function Home() {
         <button>World</button>
       </div>
 
-      <div>
-        {data ? (<p>{data.region}</p>):(<p>Loading fetch data...</p>)}
-      </div>
+      {/* <div>
+        {data ? (<p>{data[75].region}</p>):(<p>Loading fetch data...</p>)}
+      </div> */}
 
 
       <div id="social">

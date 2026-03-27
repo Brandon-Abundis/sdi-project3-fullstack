@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./Start/Home";
@@ -20,13 +20,25 @@ function App() {
   const { countries, setCountries } = useFetchAll();
   if(!countries) return <div>Loading Countries</div>
 
+  const [dbData, setdbData] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      const countriesData = await fetch('http://localhost:8080/countries/all')
+        .then(res => res.json());
+
+      setdbData(countriesData);
+    }
+    fetchData();
+  },[]);
+
   return (
     <GameContext.Provider
       value={{countryStats, setCountryStats,
               captured, setCaptured,
               allied, setAllied,
               rounds, setRounds,
-              countries, setCountries}}>
+              countries, setCountries, dbData}}>
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/selection' element={<Selection/>} />
