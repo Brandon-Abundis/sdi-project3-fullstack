@@ -26,9 +26,9 @@ export default function Score(country) {
 
   // // Much larger scale
   // return Math.round(raw * 200);
-  const gdp = country.gdp;
+  const gdp = country.gdp; // not a object anymore<-
   const population = country.population;
-  const gini = country.gini[Object.keys(country.gini)[0]];
+  const gini = country.gini; // not an object anymore please work fuck...
 
   const gdpBillions = gdp / 1_000_000_000;
   const gdpPerCap = gdp / population;

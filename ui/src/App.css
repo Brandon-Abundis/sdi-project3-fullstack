@@ -74,6 +74,10 @@ button:focus-visible {
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
   background-color: #1a1a1a;
 }
+.selection-card img {
+  height: 300px;
+  width: auto;
+}
 .selected{
   display: flex;
   flex-direction: column;

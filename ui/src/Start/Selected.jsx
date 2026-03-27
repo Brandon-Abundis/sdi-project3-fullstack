@@ -13,7 +13,7 @@ export default function Selected({country}){
 
 
   function handleConfirmation() {
-    const gini = country.gini[Object.keys(country.gini)[0]];
+    const gini = country.gini;
 
     // Normalize Gini to 0–1, then multiply to 100
     let giniNorm = 1 - (gini - 20) / 40;
@@ -48,7 +48,7 @@ export default function Selected({country}){
   return(
     <div className="selected">
 
-      <h2>Selected: {country.name.official}</h2>
+      <h2>Selected: {country.name}</h2>
 
       <div className="selected-inner">
         <div className="selected-left">
@@ -61,9 +61,9 @@ export default function Selected({country}){
           <span>GPD: ${Number(country.gdp).toLocaleString("en-US")}</span>
           <span>Population: {Number(country.population).toLocaleString("en-US")}</span>
           <span>
-            Gini: {Object.keys(country.gini)[0]}:{" "}
-            <span style={getGiniStyle(country.gini[Object.keys(country.gini)[0]])}>
-              {country.gini[Object.keys(country.gini)[0]]}</span>
+            Gini: {country.gini}:{" "}
+            <span style={getGiniStyle(country.gini)}>
+              {country.gini}</span>
           </span>
           <button onClick={() => handleConfirmation()}>Confirm</button>
 

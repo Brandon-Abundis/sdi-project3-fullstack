@@ -59,21 +59,21 @@ export default function CountryCard({country, setResult, nextRound, setRoundStat
     setShowOverlay(true)
   }
 
-  const coat = country.coatOfArms?.svg;
-  const flag = country.flag?.svg;
+  const coat = country.coat_of_arms;
+  const flag = country.flag;
   const imageSrc = coat == '' ? flag : coat; //image src is getting annoying
 
 
   return(
     <div className={`country-card ${hoverEnabled ? "hoverable" : ""}`} style={{
-      backgroundImage: `url(${country.flags.svg})`,
+      backgroundImage: `url(${country.flag})`,
       backgroundSize: 'cover',
     }}>
       <div className="country-data">
-        <span >{country.name.common}{"/ score: "}{score(country)}</span>
+        <span >{country.name}{"/ score: "}{score(country)}</span>
         <img
           src={imageSrc}
-          alt={country.name.common + " coat of arms"}
+          alt={country.name + " coat of arms"}
           onError={(e) => {
             e.target.onerror = null;
             e.target.src = flag; // fallback to flag if coat fails

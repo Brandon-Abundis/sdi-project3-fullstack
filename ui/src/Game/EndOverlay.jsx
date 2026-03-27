@@ -42,15 +42,15 @@ export default function EndOverlay() {
         <div className="end-top">
           <div className="stats">
             <div className="stats-left">
-              <h3>{countryStats.name.official}</h3>
-              <img src={countryStats.flags.svg} alt={countryStats.name.common}></img>
+              <h3>{countryStats.official}</h3>
+              <img src={countryStats.flag} alt={countryStats.name}></img>
             </div>
 
             <div className="stats-right">
               <span>GDP: ${countryStats.gdp.toLocaleString()}</span>
               <span>Population: {Math.round(countryStats.population).toLocaleString()}</span>
               <span>Captured: {captured.length} countries</span>
-              <span>Allied: {captured.length} countries</span>
+              <span>Allied: {allied.length} countries</span> {/* error here */}
               <span>Region: {countryStats.region}</span>
               <div className="stats-inner-right">
                 <span>Score: {Score(countryStats)}</span>

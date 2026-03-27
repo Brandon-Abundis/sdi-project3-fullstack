@@ -6,6 +6,7 @@ import Selection from "./Start/Selection";
 import Game from "./Game/Game";
 
 import useFetchAll from "./customHooks/useFetchAll";
+import new_useFetchAll from "./customHooks/new_useFetchAll";
 import "./App.css";
 
 export const GameContext = createContext();
@@ -17,20 +18,9 @@ function App() {
   const [allied, setAllied] = useState([]);
   const [rounds, setRounds] = useState(0);
 
-  const { countries, setCountries } = useFetchAll();
+  // const { countries, setCountries } = useFetchAll();
+  const { countries, setCountries } = new_useFetchAll();
   if(!countries) return <div>Loading Countries</div>
-
-  const [dbData, setdbData] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      const countriesData = await fetch('http://localhost:8080/countries/all')
-        .then(res => res.json());
-
-      setdbData(countriesData);
-    }
-    fetchData();
-  },[]);
 
   return (
     <GameContext.Provider
@@ -38,7 +28,7 @@ function App() {
               captured, setCaptured,
               allied, setAllied,
               rounds, setRounds,
-              countries, setCountries, dbData}}>
+              countries, setCountries}}>
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/selection' element={<Selection/>} />

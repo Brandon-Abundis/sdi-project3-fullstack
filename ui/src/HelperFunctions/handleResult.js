@@ -106,19 +106,18 @@ export default function handleResult(actualResult, type, setCountryStats, userSt
   });
 
 
-  // had to do this bec the mf gini is in a object with random key names
-  // getting prevoius and re-naming it to value to find faster.
+  // this was orinally due to a key having an object of random key names
+  // if i remove this for gini it breaks sooooooo, i just changes it a lil.
   setCountryStats(prev => {
-    // Get the first (and only) key in the gini object
-    const giniKey = Object.keys(prev.gini)[0];
-    const currentGini = prev.gini[giniKey];
+    // Get the prevoius key value
+    const currentGini = prev.gini;
 
     const newGini = Math.max(20, Math.min(60, currentGini + giniDelta));
 
     return {
       ...prev,
       gdp: newGDP,
-      gini: { value: newGini },// overwrite object holy f
+      gini: newGini,// is now just a number...
       energy: newEnergy,
       population: newPopulation,
       volatility: newVolatility

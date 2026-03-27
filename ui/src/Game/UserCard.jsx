@@ -28,14 +28,14 @@ export default function UserCard({countryStats}) {
     <div className="user-card">
 
       <div className="user-main">
-        <span>{countryStats.name.common}{" score: "}{Score(countryStats)}</span>
+        <span>{countryStats.name}{" score: "}{Score(countryStats)}</span>
 
-        <img src={countryStats.coatOfArms.svg} alt={countryStats.flags.alt} style={{ width: "100%", height: "auto", maxHeight: "300px", objectFit: "contain" }}></img>
+        <img src={countryStats.coat_of_arms} alt={countryStats.flag} style={{ width: "100%", height: "auto", maxHeight: "300px", objectFit: "contain" }}></img>
 
-        <h1 style={getGiniBackgroundStyle(countryStats.gini[Object.keys(countryStats.gini)[0]])}>
-          Gini {Object.keys(countryStats.gini)[0]}:{" "}
-          <span style={getGiniStyle(countryStats.gini[Object.keys(countryStats.gini)[0]])}>
-            {countryStats.gini[Object.keys(countryStats.gini)[0]].toFixed(2)}</span>
+        <h1 style={getGiniBackgroundStyle(countryStats.gini)}>
+          Gini {countryStats.gini}:{" "}
+          <span style={getGiniStyle(countryStats.gini)}>
+            {countryStats.gini.toFixed(2)}</span>
         </h1>
 
         <span>GPD: ${formatNumber(countryStats.gdp)}</span>

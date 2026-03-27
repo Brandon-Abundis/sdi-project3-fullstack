@@ -15,15 +15,15 @@ export default function SelectionCard({countryData, setSelection}){
 
   return(
     <div className="selection-card" onClick={() => handleSelection(countryData)}>
-      <span>{countryData.name.common}</span>
+      <span>{countryData.name}</span>
 
-      <img src={countryData.flags.png} alt={countryData.flags.alt}></img>
+      <img src={countryData.flag} alt={countryData.name}></img>
       <span>GPD: ${formatNumber(countryData.gdp)}</span>
       <span>Population: {formatNumber(countryData.population)}</span>
       <span>
-        Gini {Object.keys(countryData.gini)[0]}:{" "}
-        <span style={getGiniStyle(countryData.gini[Object.keys(countryData.gini)[0]])}>
-          {countryData.gini[Object.keys(countryData.gini)[0]]}</span>
+        Gini {countryData.gini}:{" "}
+        <span style={getGiniStyle(countryData.gini)}>
+          {countryData.gini}</span>
       </span>
       <span>
         Starting Score: {Score(countryData)}

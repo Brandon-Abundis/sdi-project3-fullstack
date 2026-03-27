@@ -3,8 +3,8 @@ import Score from "./score";
 export default function computeNegotiationProbability(userStats, botStats) {
   const userScore = Score(userStats);
   const botScore = Score(botStats);
-  const userGini = userStats.gini[Object.keys(userStats.gini)[0]];
-  const botGini = botStats.gini[Object.keys(botStats.gini)[0]];
+  const userGini = userStats.gini;
+  const botGini = botStats.gini;
 
   //score leverage, even with low gini if your strong countries still want to be friend
   const scoreRatio = userScore / botScore;
@@ -30,7 +30,8 @@ export default function computeNegotiationProbability(userStats, botStats) {
   }
 
   // GDP peer respect bonus, bec it is crazy
-  const gdpRatio = Math.min(userStats.gpd, botStats.gpd) / Math.max(userStats.gpd, botStats.gpd);
+  // gpd spelling error cahnged to gdp.
+  const gdpRatio = Math.min(userStats.gdp, botStats.gdp) / Math.max(userStats.gdp, botStats.gdp);
   let gdpBonus = 0;
 
   if (gdpRatio > 0.9) gdpBonus = 0.20;

@@ -32,7 +32,7 @@ export default function Game() {
   // const entries = randCountries(countries);
 
   useEffect(() => {
-    const giniValue = countryStats.gini[Object.keys(countryStats.gini)[0]];
+    const giniValue = countryStats.gini;
     if (giniValue >= 60) {
       setShowEnd(true);
     }
@@ -75,10 +75,10 @@ export default function Game() {
 
           <div className="captured-col">
             {captured.map((cap, index) => (
-                <img src={cap.flags.svg}
-                alt={cap.name.common}
+                <img src={cap.flag}
+                alt={cap.name}
                 key={index} style={{width: "2rem", height: "auto", border:'1px solid rgba(247, 0, 0, 0.6)'}}
-                title={cap.name.common}></img>
+                title={cap.name}></img>
               ))}
           </div>
 
@@ -91,11 +91,11 @@ export default function Game() {
 
           <div className="allied-col">
             {allied.map((cap, index) => (
-                <img src={cap.flags.svg}
-                alt={cap.name.common}
+                <img src={cap.flag}
+                alt={cap.name}
                 key={index}
                 style={{width: "2rem", height: "auto", border:'1px solid rgba(0, 247, 54, 0.6)'}}
-                title={cap.name.common}></img>
+                title={cap.name}></img>
               ))}
           </div>
 

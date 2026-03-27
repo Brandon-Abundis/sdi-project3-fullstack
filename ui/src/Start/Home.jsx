@@ -1,31 +1,22 @@
 import { useNavigate } from "react-router-dom"
 
 import GeoChart from "../GeoCharts/GeoChart";
-import { useState } from "react";
-import { useEffect } from "react";
 
 export default function Home() {
   const navigate = useNavigate();
 
-  const [data, setData] = useState(null);
+  function handleClick() {
+    if(!window.google) return; // check if outside
 
-  useEffect(() => {
-    async function fetchData() {
-      const countriesData = await fetch('http://localhost:8080/countries/all')
-        .then(res => res.json());
-
-      setData(countriesData);
-    }
-    fetchData();
-  },[]);
-
-  if(!data) return <p>Loading data...</p>
-  // console.log(data[75]);
+    const data = window.google.visualization.arrayToDataTable(conqueredChartData);
+    const chart = new window.google.visualization.GeoChart(chartRef.current);
+    console.log()
+  }
 
   return(
     <div className="home">
       <div className="geo-chart-menu">
-        <GeoChart width={'900px'} height={'100%'} testData={data}/>
+        <GeoChart width={'900px'} height={'100%'}/>
       </div>
       <div className="home-menu">
         <h2>Global Conquest ahh game</h2>
@@ -34,11 +25,7 @@ export default function Home() {
         <button>World</button>
       </div>
 
-      {/* <div>
-        {data ? (<p>{data[75].region}</p>):(<p>Loading fetch data...</p>)}
-      </div> */}
-
-
+      {/* -------------------------random stuff below------------------------ */}
       <div id="social">
           <svg className="icon" role="presentation" aria-hidden="true">
             <use href="/icons.svg#social-icon"></use>

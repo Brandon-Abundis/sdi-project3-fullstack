@@ -11,7 +11,7 @@ import { GameContext } from "../App";
   ['US', 100, country.area]
   ]
 */
-const GeoChart = ({refreshKey, width, height, testData}) => {
+const GeoChart = ({refreshKey, width, height}) => {
   const {countryStats, allied, captured, countries} = useContext(GameContext);
 
   const geoData = [
@@ -52,7 +52,7 @@ const GeoChart = ({refreshKey, width, height, testData}) => {
 
   } else { // used for main menu
     // no selected country → show all
-    testData.forEach(country => {
+    countries.forEach(country => {
       geoData.push([
         country.cca2,
         50,
