@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./Start/Home";
 import Selection from "./Start/Selection";
 import Game from "./Game/Game";
+import GuessGame from "./GuessGame/GuessGame";
 
 import useFetchAll from "./customHooks/useFetchAll";
 import new_useFetchAll from "./customHooks/new_useFetchAll";
@@ -31,6 +32,7 @@ function App() {
               countries, setCountries}}>
       <Routes>
         <Route path='/' element={<Home/>} />
+        <Route path='/bruh' element={<GuessGame/>} />
         <Route path='/selection' element={<Selection/>} />
         <Route path='/game/:round' element={<Game/>} />
       </Routes>

@@ -15,7 +15,7 @@ router.get('/all', async (req,res) => {
 router.get('/id/:id', async (req, res) => {
   try {
     const {id} = req.params;
-    const result = await db('countries').select('*').where({id});
+    const result = await db('countries').select('*').where({id}).first();
     return res.status(200).json(result);
   }catch(err) {
     res.status(500).send({message: err.message})

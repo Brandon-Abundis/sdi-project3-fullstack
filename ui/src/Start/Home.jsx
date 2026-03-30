@@ -1,17 +1,12 @@
 import { useNavigate } from "react-router-dom"
+import { useState } from "react";
 
 import GeoChart from "../GeoCharts/GeoChart";
+import GeoSelectChart from "../GeoCharts/GeoSelectChart";
 
 export default function Home() {
   const navigate = useNavigate();
-
-  function handleClick() {
-    if(!window.google) return; // check if outside
-
-    const data = window.google.visualization.arrayToDataTable(conqueredChartData);
-    const chart = new window.google.visualization.GeoChart(chartRef.current);
-    console.log()
-  }
+  const [selectedISO, setSelectedISO] = useState(null);
 
   return(
     <div className="home">
@@ -20,10 +15,25 @@ export default function Home() {
       </div>
       <div className="home-menu">
         <h2>Global Conquest ahh game</h2>
-        <button onClick={() => navigate('/selection')}>Start</button>
-        <button>Stats</button>
+        <button onClick={() => navigate('/selection')}>Country Rouge Like</button>
+        <button onClick={() => navigate('/bruh')}>Country Guesser</button>
         <button>World</button>
       </div>
+
+      <div>
+        <GeoSelectChart width={'900px'} height={'100%'} onSelect={(iso) => {
+          console.log("Selected:", iso);
+          setSelectedISO(iso);
+        }}/>
+        {selectedISO && <p>You clicked: {selectedISO}</p>}
+      </div>
+
+
+
+
+
+
+
 
       {/* -------------------------random stuff below------------------------ */}
       <div id="social">
