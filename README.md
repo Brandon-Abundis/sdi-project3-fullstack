@@ -65,7 +65,7 @@ This is how its supposed to look if it works correctly
 <img src="ui/public/Screenshot guess mid game.png" width="500" />
 
 *This conludes my awsome game of sorts...
-<img src="https://media1.tenor.com/m/1EwNf1_27Q0AAAAC/seiun-sky-sieun-fish.gif" width="500" />
+<img src="https://media1.tenor.com/m/1EwNf1_27Q0AAAAC/seiun-sky-sieun-fish.gif?raw=1" width="500" />
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
