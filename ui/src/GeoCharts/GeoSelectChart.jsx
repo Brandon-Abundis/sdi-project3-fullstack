@@ -8,23 +8,46 @@ const GeoSelectChart = ({ width, height, onSelect, onHover, remainingCountries, 
   const ready = useGoogleCharts();
   const chartRef = useRef(null);
 
-  // Build simple data table
+  // for some reason, out of no where the app was having a sync issue with an object.
+  const safeRemaining = Array.isArray(remainingCountries) ? remainingCountries : [];
+  const safeGuessed = Array.isArray(guessedCountries) ? guessedCountries : [];
+
+
+
+  //build simple data table
   const geoData = [
-    ["Country", "Value", { type: "string", role: "tooltip" }],
-    ...remainingCountries.map(c => [c.cca2, 1, c.region]), // all starting countries
-    ...guessedCountries.map(c => [c.cca2, 2, c.region])
+  ["Country", "Value", { type: "string", role: "tooltip" }],
+    ...safeRemaining.map(c => [
+      c.cca2,
+      1,
+      `${c.subregion}`
+    ]),
+    ...safeGuessed.map(c => [
+      c.cca2,
+      2,
+      `${c.name}
+        Region: ${c.region}
+        Sub-Region: ${c.subregion}
+        Population: ${c.population.toLocaleString()}
+        Area: ${c.area.toLocaleString()} km²
+        GDP: ${c.gdp ? c.gdp.toLocaleString() : "N/A"}`
+    ])
   ];
+
 
   useEffect(() => {
     if (!ready || !chartRef.current) return;
 
     const data = window.google.visualization.arrayToDataTable(geoData);
 
+
+
     const options = {
       resolution: "countries",
       backgroundColor: "#16171D",
       datalessRegionColor: "#555",
       legend: "none",
+      tooltip: { isHtml: true },
       colorAxis: {
         values: [1,2],
         colors: ["#4a8b34", "#e24a4a"]
@@ -41,7 +64,7 @@ const GeoSelectChart = ({ width, height, onSelect, onHover, remainingCountries, 
       }
     });
 
-    // HOVER HANDLER
+    // HOVER HANDLER - never used lol bec i have no idea how to make map grow.
     window.google.visualization.events.addListener(chart, "regionMouseOver", (e) => {
       onHover?.(e.region);
     });

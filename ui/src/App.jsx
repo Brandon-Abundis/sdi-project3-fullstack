@@ -8,6 +8,7 @@ import GuessGame from "./GuessGame/GuessGame";
 
 import useFetchAll from "./customHooks/useFetchAll";
 import new_useFetchAll from "./customHooks/new_useFetchAll";
+import useFetchUnfiltered from "./customHooks/useFetchUnfiltered";
 import "./App.css";
 
 export const GameContext = createContext();
@@ -23,13 +24,16 @@ function App() {
   const { countries, setCountries } = new_useFetchAll();
   if(!countries) return <div>Loading Countries</div>
 
+  const { unfiltered } = useFetchUnfiltered();
+  if(!unfiltered) return <div>Loading Countries</div>
+
   return (
     <GameContext.Provider
       value={{countryStats, setCountryStats,
               captured, setCaptured,
               allied, setAllied,
               rounds, setRounds,
-              countries, setCountries}}>
+              countries, setCountries, unfiltered}}>
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/bruh' element={<GuessGame/>} />

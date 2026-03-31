@@ -2,8 +2,12 @@ import { useEffect, useState, useContext } from "react";
 import GeoSelectChart from "../GeoCharts/GeoSelectChart";
 import { GameContext } from "../App";
 
+import getDifficulty from "../HelperFunctions/getDifficulty";
+import Back from "../Start/Back";
+// import useFetchUnfiltered from "../customHooks/useFetchUnfiltered";
+//https://media1.tenor.com/m/1EwNf1_27Q0AAAAC/seiun-sky-sieun-fish.gif
 export default function GuessGame() {
-  const { countries } = useContext(GameContext);
+  const { countries, unfiltered } = useContext(GameContext);
 
   const [selectedCCA2, setSelectedCCA2] = useState(null);
   const [hoveredCountry, setHoveredCountry] = useState(null);
@@ -19,6 +23,22 @@ export default function GuessGame() {
   const [remainingCountries, setRemainingCountries] = useState([]);
   const [guessedCountries, setGuessedCountries] = useState([]);
 
+  const [showEnd, setShowEnd] = useState(false);
+  const [message, setMessage] = useState(
+    {
+      msg: '',
+      source: null,
+      msgCSS: {}
+    });
+
+  const gifobj ={
+    win: ['https://media1.tenor.com/m/fYchCFlG2HAAAAAd/satono-diamond.gif', 'https://media1.tenor.com/m/D4ga-MHBWZYAAAAC/gog-alien.gif', 'https://media.tenor.com/HZxmXhOu9xkAAAAi/fish-spinning-spinning-fish.gif', 'https://media1.tenor.com/m/-JmRuFyBvQsAAAAd/caballo.gif'],
+    lose: ['https://media1.tenor.com/m/Ftt2wpxYZaoAAAAC/umamusume-seiun-sky.gif','https://media1.tenor.com/m/o0rZGsm3gWAAAAAC/skeleton-meme.gif', 'https://media1.tenor.com/m/ekA1xxoJoSoAAAAC/angryxdx.gif', 'https://media1.tenor.com/m/F-D5EhlQXdMAAAAC/nalog.gif', 'https://media1.tenor.com/m/hH8vLaUMljIAAAAC/strawberry-cat-domgcat-donkeycat-free-robux-vbucks.gif', 'https://media.tenor.com/damu8hbJ19YAAAAi/shrug-emoji.gif']
+  }
+  function randGif(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
   //random
   function randomCountry(list) {
     if (!list.length) return null;
@@ -28,25 +48,29 @@ export default function GuessGame() {
 
   //initialize remainingCountries when countries load
   useEffect(() => {
-    if (countries?.length) {
-      const filtered = countries.filter(c => c.area >= 10670);
+    if (unfiltered?.length) {
+      const filtered = unfiltered.filter(c => c.area >= 10800).filter(c => c.cca2 !== "AQ");
       setRemainingCountries(filtered);
-      setRandCountry(randomCountry(countries));
+      setRandCountry(randomCountry(unfiltered));
     }
-  }, [countries]);
+  }, [unfiltered]);
 
   //new random country whenever round changes
   useEffect(() => {
     if (remainingCountries.length > 0) {
       setRandCountry(randomCountry(remainingCountries));
       console.log("Remaining countries:", remainingCountries.length);
+    } else {
+      setShowEnd(true);
     }
   }, [round]);
 
   useEffect(() => {
     console.log(selectedCCA2, randCountry?.cca2)
     if (selectedCCA2 === randCountry?.cca2) {
-      console.log('match');
+      setMessage({msg: 'CORRECT',
+          source: randGif(gifobj.win),
+          msgCSS: { color: "lime", fontWeight: 650, fontSize: "1.4rem" }});
 
       setScore(prev => ({ ...prev, correct: prev.correct + 1 }));
 
@@ -59,7 +83,11 @@ export default function GuessGame() {
 
       // checking for null so to not cross contaminate logic.
     } else if(selectedCCA2 != null) {
-      console.log(`WRONG: ${selectedCCA2} is not ${randCountry?.cca2}`);
+      // console.log(`WRONG: ${selectedCCA2} is not ${randCountry?.cca2}`);
+      setMessage({msg:`WRONG, that is not '${randCountry?.name}'!`,
+        source: randGif(gifobj.lose),
+        msgCSS: { color: "red", fontWeight: 650, fontSize: "1.4rem" }});
+
       setScore(prev => ({ ...prev, wrong: prev.wrong + 1 }));
     }
     setSelectedCCA2(null); // just incase of an error i saw once.
@@ -68,21 +96,15 @@ export default function GuessGame() {
   }, [selectedCCA2])
 
 
-  function getDifficulty(areaKm2) {
-    if (areaKm2 > 2_000_000) return "Very Easy";      // Russia, Canada, USA, China
-    if (areaKm2 > 500_000) return "Easy";             // Large countries
-    if (areaKm2 > 100_000) return "Medium!";           // Mid-sized
-    if (areaKm2 > 30_000) return "Hard!!";              // Smaller countries
-    return "Very Hard!!!";                               // Microstates, islands
-  }
-
-
   return (
     <div className="GuessGame">
       <div className="guess-country-info">
 
         {randCountry && <div className="guess-left">
-          <p>Find <span style={{fontWeight: '650', color: 'white' }}>{randCountry.name}</span> on the map. Difficulty: {getDifficulty(randCountry.area)}</p>
+          <Back/>
+          <p>Find <span style={{fontWeight: '650', color: 'white' }}>
+            {randCountry.name}</span> on the map. Difficulty:
+              {getDifficulty(randCountry.area)}</p>
           <div className="guess-inner">
             <img src={randCountry.flag} alt={randCountry.name} style={{maxHeight:"80px"}}/>
             <div>
@@ -97,6 +119,9 @@ export default function GuessGame() {
           <p>Guessed Wrong: {score.wrong}</p>
           <p>Round: {round}</p>
           <p>Remaining: {remainingCountries.length}</p>
+          <div style={message.msgCSS}>{message.msg}
+            <img src={message.source} alt="img" style={{ maxWidth: "fit-content", height: "100px", marginLeft: "8px" }}/>
+          </div>
         </div>
 
       </div>

@@ -10,6 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 const countryRoutes = require('./routes/countries');
+const unfilteredRoutes = require('./routes/unfiltered');
 
 // const {username} = req.body;
 // res.cookie('user', {id:1, username}, {httpOnly:true});
@@ -20,5 +21,6 @@ app.get('/', (req,res) => {
 })
 
 app.use('/countries', countryRoutes);
+app.use('/unfiltered', unfilteredRoutes);
 
 app.listen(port, () => console.log(`Express server listening on port ${port}`));

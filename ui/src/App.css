@@ -360,6 +360,7 @@ button:focus-visible {
   z-index: 1000;
   background: #16171d6a;
   color: antiquewhite;
+  padding-top: 4px;
 }
 .guess-inner{
   display: flex;
