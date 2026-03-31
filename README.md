@@ -64,7 +64,9 @@ This is how its supposed to look if it works correctly
 - This is how the mid-game should look like as you struggle through it.
 <img src="ui/public/Screenshot guess mid game.png" width="500" />
 
-*This conludes my awsome game of sorts...
+---
+
+## This conludes my awsome game of sorts...
 <img src="ui/public/fish.gif" width="500" />
 # React + Vite
 
