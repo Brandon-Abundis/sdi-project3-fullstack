@@ -14,7 +14,7 @@ export default function Home() {
         <GeoChart width={'900px'} height={'100%'}/>
       </div>
       <div className="home-menu">
-        <h2>Global Conquest ahh game</h2>
+        <h2>Global map ahh games...</h2>
         <button onClick={() => navigate('/selection')}>Country Rouge Like</button>
         <button onClick={() => navigate('/bruh')}>Country Guesser</button>
         <button>World</button>
@@ -36,7 +36,7 @@ export default function Home() {
 
 
       {/* -------------------------random stuff below------------------------ */}
-      <div id="social">
+      {/* <div id="social">
           <svg className="icon" role="presentation" aria-hidden="true">
             <use href="/icons.svg#social-icon"></use>
           </svg>
@@ -92,7 +92,7 @@ export default function Home() {
               </a>
             </li>
           </ul>
-        </div>
+        </div> */}
     </div>
   )
 }
